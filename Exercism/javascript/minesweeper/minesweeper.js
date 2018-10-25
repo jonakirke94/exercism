@@ -1,56 +1,61 @@
-export class Minesweeper  {
-    
-    constructor() {
+
+const bombsOnRow = (row, idx) => {
+  let bombs = 0;
+  if (row.length >= idx - 1) {
+    bombs += row[idx - 1] === '*' ? 1 : 0;
+  }
+
+  if (row.length >= idx - 1) {
+    bombs += row[idx] === '*' ? 1 : 0;
+  }
+
+  if (row.length >= idx - 1) {
+    bombs += row[idx + 1] === '*' ? 1 : 0;
+  }
+
+  return bombs;
+};
+
+export class Minesweeper {
+  annotate(board) {
+    const hasMines = board.some(row => [...row].includes('*'));
+    if (!hasMines) return board;
+
+    return board.map((row, rowIdx) => [...row]
+      .map((col, colIdx) => (col === ' ' ? this.adjacentBombs(board, rowIdx, row, colIdx) : col))
+      .join(''));
+  }
+
+  adjacentBombs(board, rowIdx, row, colIdx) {
+    this.bombs = 0;
+
+    // ABOVE ROW
+    if (rowIdx > 0) {
+      const upperRow = board[rowIdx - 1];
+      this.bombs += bombsOnRow(upperRow, colIdx);
+    }
+
+    // OWN ROW
+	this.bombs += bombsOnRow(row, colIdx);
+
+
+    // BELOW ROW
+    if (rowIdx < board.length - 1) {
+      const lowerRow = board[rowIdx + 1];
+	  this.bombs += bombsOnRow(lowerRow, colIdx);
 
     }
 
-    annotate(board) {
-       
-        return board.map((row, rowIdx) => {
-            return [...row]
-                .map((col, idx) => {
-                    //fetch number of adjacent bombs
-                    return adjacentBombs([...board], rowIdx, col, idx);
-
-
-
-                })
-                .join('');
-        });
+    if (row[colIdx] === '*') {
+      return '*';
     }
+
+    if (this.bombs === 0) {
+      return ' ';
+    }
+    return this.bombs;
+  }
 }
-
-const adjacentBombs = (board, rowIdx, col, idx) => {
-    let bombs = 0;
-    console.log(board);
-    console.log(rowIdx, 'rowIdx');
-
-    // row above
-    if(rowIdx - 1 >= board.length) {
-        bombs += board[rowIdx -1].reduce((acc, val) => {            
-            return val === '*' ? acc + 1 : acc + 0;
-        });
-    }
-
-    // on own row
-    bombs += board[rowIdx].reduce((acc, val) => {            
-        return val === '*' ? acc + 1 : acc + 0;
-    });
-    
-    // on row below
-    if(rowIdx +1 <= board.length) {
-        bombs += board[rowIdx +1].reduce((acc, val) => {            
-            return val === '*' ? acc + 1 : acc + 0;
-        });
-    }
-
-    
-
-
-
-    return bombs;
-}
-
 
 
 export default Minesweeper;
