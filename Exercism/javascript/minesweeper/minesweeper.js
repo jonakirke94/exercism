@@ -3,16 +3,9 @@ const bombsOnRow = (row, idx) => {
   let bombs = 0;
   if (row.length >= idx - 1) {
     bombs += row[idx - 1] === '*' ? 1 : 0;
-  }
-
-  if (row.length >= idx - 1) {
     bombs += row[idx] === '*' ? 1 : 0;
-  }
-
-  if (row.length >= idx - 1) {
     bombs += row[idx + 1] === '*' ? 1 : 0;
   }
-
   return bombs;
 };
 
@@ -36,23 +29,23 @@ export class Minesweeper {
     }
 
     // OWN ROW
-	this.bombs += bombsOnRow(row, colIdx);
+	  this.bombs += bombsOnRow(row, colIdx);
 
 
     // BELOW ROW
     if (rowIdx < board.length - 1) {
       const lowerRow = board[rowIdx + 1];
 	  this.bombs += bombsOnRow(lowerRow, colIdx);
-
     }
 
     if (row[colIdx] === '*') {
       return '*';
-    }
-
+    } 
+    
     if (this.bombs === 0) {
       return ' ';
     }
+
     return this.bombs;
   }
 }
