@@ -7,29 +7,30 @@ const isValid = (str) => {
   return re.test(str);
 };
 
+const histogram = {
+  A: 0,
+  C: 0,
+  G: 0,
+  T: 0,
+};
+
+const reset = () => {
+  histogram.A = 0;
+  histogram.C = 0;
+  histogram.G = 0;
+  histogram.T = 0;
+};
+
 export class NucleotideCounts {
   static parse(strand) {
     if (!isValid(strand)) return error();
 
-    let adenine = 0;
-    let cytosine = 0;
-    let guanine = 0;
-    let thymine = 0;
+    // since it's a static method we need to make sure the histogram is reset on each call
+    reset();
 
-    // 'A' for adenine, 'C' for cytosine, 'G' for guanine, and 'T' thymine.
-    [...strand].forEach((element) => {
-		switch (element) {
-		case 'A': adenine++;
-			break;
-		case 'C': cytosine++;
-			break;
-		case 'G': guanine++;
-			break;
-		case 'T': thymine++;
-			break;
-		}
+    [...strand].forEach((c) => {
+      histogram[c] += 1;
     });
-
-    return `${adenine} ${cytosine} ${guanine} ${thymine}`;
+    return `${histogram.A} ${histogram.C} ${histogram.G} ${histogram.T}`;
   }
 }
