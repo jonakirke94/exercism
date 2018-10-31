@@ -16,23 +16,10 @@ export class Queens {
   }
 
   toString() {
-    const board = [];
-    for (let i = 0; i < 8; i++) {
-      let row = '';
-      for (let j = 0; j < 8; j++) {
-        if (i === this.white[0] && j === this.white[1]) {
-          row += j === 7 ? 'W' : 'W ';
-        } else if (i === this.black[0] && j === this.black[1]) {
-          row += j === 7 ? 'B' : 'B ';
-        } else {
-          row += j === 7 ? '_' : '_ ';
-        }
-      }
-      if (i === 7) {
-        row += '\n';
-      }
-      board.push(row);
-    }
-    return board.join('\n');
+    const board = Array(8).fill(0).map(() => Array(8).fill('_'));
+    board[this.white[0]][this.white[1]] = 'W';
+    board[this.black[0]][this.black[1]] = 'B';
+    const joinRows = board.map(grids => grids.join(' '));
+    return `${joinRows.join('\n')}\n`;
   }
 }
