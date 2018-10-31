@@ -4,23 +4,24 @@ const isValid = (RNA) => {
 };
 
 const codonMap = {
-  AUG: 'Methionine',
-  UUU: 'Phenylalanine',
-  UUC: 'Phenylalanine',
-  UUA: 'Leucine',
-  UUG: 'Leucine',
-  UCG: 'Serine',
-  UCA: 'Serine',
-  UCC: 'Serine',
-  UCU: 'Serine',
-  UAC: 'Tyrosine',
-  UAU: 'Tyrosine',
-  UGU: 'Cysteine',
-  UGC: 'Cysteine',
-  UGG: 'Tryptophan',
-  UAA: 'STOP',
-  UAG: 'STOP',
-  UGA: 'STOP',
+  Methionine: ['AUG'],
+  Phenylalanine: ['UUU', 'UUC'],
+  Leucine: ['UUA', 'UUG'],
+  Serine: ['UCU', 'UCC', 'UCA', 'UCG'],
+  Tyrosine: ['UAU', 'UAC'],
+  Cysteine: ['UGU', 'UGC'],
+  Tryptophan: ['UGG'],
+  STOP: ['UAA', 'UAG', 'UGA'],
+};
+
+const codonByRNA = (RNA) => {
+  const keys = Object.keys(codonMap);
+  const filtered = keys.filter((key, i) => {
+    if (codonMap[keys[i]].includes(RNA)) {
+      return keys[i];
+    }
+  });
+  return filtered[0];
 };
 
 export const translate = (RNA) => {
@@ -30,13 +31,14 @@ export const translate = (RNA) => {
 
   const protein = [];
   for (let i = 0; i < RNA.length; i += 3) {
-    const codon = RNA.substring(i, i + 3);
+    const rnaSub = RNA.substring(i, i + 3);
+    const codon = codonByRNA(rnaSub);
 
-    if (codonMap[codon] === 'STOP') {
+    if (codon === 'STOP') {
       break;
     }
 
-    protein.push(codonMap[codon]);
+    protein.push(codon);
   }
   return protein;
 };
