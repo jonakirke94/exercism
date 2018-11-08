@@ -1,12 +1,3 @@
-const error = () => {
-  throw new Error('Bad key');
-};
-
-const isValid = (key) => {
-  const re = new RegExp('^[a-z]+$');
-  return re.test(key);
-};
-
 const generateKey = () => {
   let key = '';
   for (let i = 0; i < 100; i++) {
@@ -16,11 +7,11 @@ const generateKey = () => {
   return key;
 };
 
-const shift = (index, key, letter, determinator) => {
+const shift = (letter, index, key, determinator) => {
   // handle short key
-  const charIdx = (index + key.length) % key.length;
+  const charIndex = (index + key.length) % key.length;
 
-  const distance = key[charIdx].charCodeAt() % 97;
+  const distance = key[charIndex].charCodeAt() % 97;
   let code = determinator === 'ENCODE' ? letter.charCodeAt() + distance : letter.charCodeAt() - distance;
 
   // handle wraps
@@ -32,24 +23,22 @@ const shift = (index, key, letter, determinator) => {
 
 export class Cipher {
   constructor(key = generateKey()) {
-    if (isValid(key)) {
-      this.key = key;
-    } else {
-      return error();
-    }
+		if (!/^[a-z]+$/.test(key)) throw new Error('Bad key')
+		
+		this.key = key;
   }
 
   encode(word) {
     return word
       .split('')
-      .map((x, idx) => shift(idx, this.key, x, 'ENCODE'))
+      .map((letter, index) => shift(letter, index, this.key, 'ENCODE'))
       .join('');
   }
 
   decode(word) {
     return word
       .split('')
-      .map((x, idx) => shift(idx, this.key, x, 'DECODE'))
+      .map((letter, index) => shift(letter, index, this.key, 'DECODE'))
       .join('');
   }
 }
