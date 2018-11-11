@@ -1,22 +1,10 @@
 export const score = word => {
     if (!word) return 0;
     const wordArr = [...word];
-    return wordArr.length > 1 ? calcluate(wordArr) : points[word.toLowerCase()];
+    return wordArr.length > 1 ? wordArr.reduce(reducer, 0) : points[word.toLowerCase()];
 }
 
-const calcluate = arr => {
-    let score = 0;
-
-    arr.forEach(element => {
-        score += points[element.toLowerCase()];
-    });
-
-    return score;
-
-}
-
-
-
+const reducer = (acc, cur) => acc += points[cur.toLowerCase()];
 
 const points = {
     a: 1,
