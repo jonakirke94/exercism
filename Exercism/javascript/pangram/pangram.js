@@ -1,15 +1,14 @@
-const toLower = sentence => sentence.split('').map(x => x.toLowerCase()).join('');
-
 export const isPangram = (sentence) => {
-  const uniqueChars = [];
+  const alphabetLength = 26;
+  const uniqueChars = new Set();
 
-  toLower(sentence)
+  sentence.toLowerCase()
     .split('')
     .forEach((char) => {
-      if (!uniqueChars.includes(char) && char.match(/[a-z]/i)) {
-        uniqueChars.push(char);
+      if (!uniqueChars.has(char) && char.match(/[a-z]/i)) {
+        uniqueChars.add(char);
       }
     });
 
-  return uniqueChars.length === 26;
+  return uniqueChars.size === alphabetLength;
 };
