@@ -1,14 +1,5 @@
 export const isPangram = (sentence) => {
   const alphabetLength = 26;
-  const uniqueChars = new Set();
-
-  sentence.toLowerCase()
-    .split('')
-    .forEach((char) => {
-      if (!uniqueChars.has(char) && char.match(/[a-z]/i)) {
-        uniqueChars.add(char);
-      }
-    });
-
-  return uniqueChars.size === alphabetLength;
+  const filtered = sentence.toLowerCase().match(/[a-z]/g);
+  return new Set(filtered).size >= alphabetLength;
 };
