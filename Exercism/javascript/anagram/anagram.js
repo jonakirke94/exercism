@@ -1,6 +1,9 @@
 const sortWord = word => word.toLowerCase().split('').sort().join('');
 
-const isAnagram = (sortedWord, word) => element => sortWord(element) === sortedWord && word.toLowerCase() !== element.toLowerCase();
+const isAnagram = (sortedWord, word) => (element) => {
+  const isIdentical = word.toLowerCase() === element.toLowerCase();
+  return sortWord(element) === sortedWord && !isIdentical;
+};
 
 export class Anagram {
   constructor(word) {
