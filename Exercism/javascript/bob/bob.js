@@ -2,21 +2,23 @@ const isAsking = message => message.charAt(message.length - 1) === '?';
 
 const isYelling = message => message === message.toUpperCase() && message.match(/[a-z]/i);
 
+const isSilent = message => message === '';
+
 export const hey = (message) => {
   const msg = message.trim();
 
-  if (!msg) {
+  if (isSilent(msg)) {
     return 'Fine. Be that way!';
   }
 
   if (isAsking(msg) && isYelling(msg)) {
-    return 'Calm down, I know what I\'m doing!';
+    return `Calm down, I know what I'm doing!`;
   }
 
   if (isAsking(msg)) {
     return 'Sure.';
   }
-  
+
   if (isYelling(msg)) {
     return 'Whoa, chill out!';
   }
