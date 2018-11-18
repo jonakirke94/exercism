@@ -7,11 +7,10 @@ export class RotationalCipher {
 
         let code = x.charCodeAt();
 
-        // small etter
+        // small letter
         if (code >= 97 && code <= 122) {
           code = code + key > 122 ? 96 + ((code + key) % 122) : code + key;
         } else {
-          console.log("was capital");
           code = code + key > 90 ? 64 + ((code + key) % 90) : code + key;
         }
 
