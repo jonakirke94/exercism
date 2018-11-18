@@ -1,4 +1,4 @@
-const reducer = (acc, cur, _idx, arr) => acc += Math.pow(cur, arr.length);
+const reducer = (acc, cur, _idx, arr) => acc += (cur ** arr.length);
 
 export const validate = (n) => {
   const arr = [...n.toString()];
