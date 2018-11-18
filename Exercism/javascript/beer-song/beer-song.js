@@ -28,7 +28,9 @@ export class Beer {
     let song = '';
     for (let i = from; i >= to; i -= 1) {
 			song += getChorus(i);
-			song += '\n';
+			if (to !== i || i === 1) {
+				song += '\n';
+			}
 
       if (i === 1) {
         song += finalVerse();
