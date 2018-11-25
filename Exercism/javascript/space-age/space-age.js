@@ -1,14 +1,14 @@
 const ORBITAL_EARTH = 31557600;
 
 const ORBITAL_MAP = {
-  earth: ORBITAL_EARTH * 1,
-  mercury: ORBITAL_EARTH * 0.2408467,
-  venus: ORBITAL_EARTH * 0.61519726,
-  mars: ORBITAL_EARTH * 1.8808158,
-  jupiter: ORBITAL_EARTH * 11.862615,
-  saturn: ORBITAL_EARTH * 29.447498,
-  uranus: ORBITAL_EARTH * 84.016846,
-  neptune: ORBITAL_EARTH * 164.79132,
+  earth: 1,
+  mercury: 0.2408467,
+  venus: 0.61519726,
+  mars: 1.8808158,
+  jupiter: 11.862615,
+  saturn: 29.447498,
+  uranus: 84.016846,
+  neptune: 164.79132,
 };
 
 export class SpaceAge {
@@ -17,7 +17,8 @@ export class SpaceAge {
   }
 
   calcAge(planet) {
-    return Number((this.seconds / ORBITAL_MAP[planet]).toFixed(2));
+    const time = this.seconds / (ORBITAL_MAP[planet] * ORBITAL_EARTH);
+    return parseFloat(time.toFixed(2));
   }
 
   onEarth() {
